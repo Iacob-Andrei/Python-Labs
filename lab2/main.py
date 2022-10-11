@@ -25,7 +25,7 @@ def ex2(list_of_numbers):
     return prime_numbers
 
 
-# Write a function that receives as parameters two lists a and b and returns: (a intersected with b, a reunited with b, a - b, b - a)
+# Write a function that receives as parameters two lists a and b and returns: (an intersected with b, a reunited with b, a - b, b - a)
 def ex3(a, b):
     a = set(a)
     b = set(b)
@@ -40,7 +40,7 @@ def ex3(a, b):
     c.append(b - a)
 
 
-# Write a function that receives as a parameters a list of musical notes (strings), a list of moves (integers) and a start position (integer). The function will return the song composed by going though the musical notes beginning with the start position and following the moves given as parameter.	Example : compose(["do", "re", "mi", "fa", "sol"], [1, -3, 4, 2], 2) will return ["mi", "fa", "do", "sol", "re"]
+# Write a function that receives as a parameters a list of musical notes (strings), a list of moves (integers) and a start position (integer). The function will return the song composed by going through the musical notes beginning with the start position and following the moves given as parameter.	Example : compose(["do", "re", "mi", "fa", "sol"], [1, -3, 4, 2], 2) will return ["mi", "fa", "do", "sol", "re"]
 def ex4(notes, moves, start_position):
     print(notes[start_position], sep=" ")
     for move in moves:
@@ -134,24 +134,72 @@ def ex9(matrix):
 # Write a function that receives a variable number of lists and returns a list of tuples as follows: the first tuple contains the first items in the lists, the second element contains the items on the position 2 in the lists, etc.
 # Ex: for lists [1,2,3], [5,6,7], ["a", "b", "c"] return: [(1, 5, "a ") ,(2, 6, "b"), (3,7, "c")].
 # Note: If input lists do not have the same number of items, missing items will be replaced with None to be able to generate max ([len(x) for x in input_lists]) tuples.
-def ex10():
+def ex10(*args):
+    max_length = max(len(a) for a in args)
+    new_list = list()
+    for i in range(0, max_length):
+        i_list = list()
+        for arg_list in args:
+            if i < len(arg_list):
+                i_list.append(arg_list[i])
+            else:
+                i_list.append(None)
+        new_list.append(i_list)
+    print(new_list)
+
+
+# Write a function that will order a list of string tuples based on the 3rd character of the 2nd element in the tuple.
+# Example: ('abc', 'bcd'), ('abc', 'zza')] ==> [('abc', 'zza'), ('abc', 'bcd')]
+def sorting_rule(element):
+    return element
+
+
+# Write a function that will receive a list of words  as parameter and will return a list of lists of words, grouped by rhyme. Two words rhyme if both of them end with the same 2 letters.
+# 	Example:
+#   group_by_rhyme(['ana', 'banana', 'carte', 'arme', 'parte']) will return [['ana', 'banana'], ['carte', 'parte'], ['arme']]
+def ex12(words):
+    rhymes = list()
+    for word in words:
+        print(word[-2:])
+        added = False
+        for i in range(0, len(rhymes)):
+            if rhymes[i][0][-2:] == word[-2:]:
+                rhymes[i].append(word)
+                added = True
+                break
+        if not added:
+            rhymes.append([word])
+    print(rhymes)
 
 
 if __name__ == '__main__':
     # print(ex1(7))
+
     # print(ex2([1, 2, 4, 6, 7, 13, 11, 29, 83]))
+
     # ex3([1, 2, 3, 4, 5], [1, 2, 6, 8])
+
     # ex4(["do", "re", "mi", "fa", "sol"], [1, -3, 4, 2], 2)
+
     # ex5([[1, 1, 1, 1, 1, 1],
     #      [1, 1, 1, 1, 1, 1],
     #      [1, 1, 1, 1, 1, 1],
     #      [1, 1, 1, 1, 1, 1],
     #      [1, 1, 1, 1, 1, 1]])
+
     # ex6(2, [1, 2, 3], [2, 3, 4], [4, 5, 6], [4, 1, "test"])
+
     # ex7([111, 121, 909, 45, 12321])
+
     # ex8(["test", "hello", "lab002"], 2, False)
+
     # ex9([[1, 2, 3, 2, 1, 1],
     #      [2, 4, 4, 3, 7, 2],
     #      [5, 5, 2, 5, 6, 4],
     #      [6, 6, 7, 6, 7, 5]])
 
+    # ex10([1,2,3], [5,6,7], ["a", "b", "c", "5"])
+
+    # ex11([('abc', 'bcd'), ('abc', 'zza')])
+
+    # ex12(['ana', 'banana', 'carte', 'arme', 'parte'])
