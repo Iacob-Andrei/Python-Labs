@@ -151,7 +151,12 @@ def ex10(*args):
 # Write a function that will order a list of string tuples based on the 3rd character of the 2nd element in the tuple.
 # Example: ('abc', 'bcd'), ('abc', 'zza')] ==> [('abc', 'zza'), ('abc', 'bcd')]
 def sorting_rule(element):
-    return element
+    return element[1][2]
+
+
+def ex11(list_of):
+    list_of.sort(key=sorting_rule)
+    print(list_of)
 
 
 # Write a function that will receive a list of words  as parameter and will return a list of lists of words, grouped by rhyme. Two words rhyme if both of them end with the same 2 letters.
@@ -200,6 +205,6 @@ if __name__ == '__main__':
 
     # ex10([1,2,3], [5,6,7], ["a", "b", "c", "5"])
 
-    # ex11([('abc', 'bcd'), ('abc', 'zza')])
+    ex11([('abc', 'bcd'), ('abc', 'zza')])
 
     # ex12(['ana', 'banana', 'carte', 'arme', 'parte'])
