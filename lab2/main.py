@@ -45,10 +45,11 @@ def ex3(a, b):
 # start position (integer). The function will return the song composed by going through the musical notes beginning
 # with the start position and following the moves given as parameter.
 # Example : compose(["do", "re", "mi", "fa", "sol"], [1, -3, 4, 2], 2) will return ["mi", "fa", "do", "sol", "re"]
-def ex4(notes, moves, start_position):
-    print(notes[start_position], sep=" ")
+def ex4(notes, moves, position):
+    print(notes[position], end=" ")
     for move in moves:
-        print(notes[move], sep=" ")
+        position = (position + move) % len(notes)
+        print(notes[position], end=" ")
 
 
 # Write a function that receives as parameter a matrix and will return the matrix obtained by replacing all the
