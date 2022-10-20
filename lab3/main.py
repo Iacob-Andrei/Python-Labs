@@ -19,9 +19,18 @@ def ex2(inp):
     return occurrences
 
 
-# Compare two dictionaries without using the operator "==" and return a list of differences as follows: (Attention,
-# dictionaries must be recursively covered because they can contain other containers, such as dictionaries, lists,
-# sets, etc.)
+# Compare two dictionaries without using the operator "==" returning True or False. (Attention, dictionaries must be
+# recursively covered because they can contain other containers, such as dictionaries, lists, sets, etc.)
+def ex3(dict_one, dict_two):
+    pass
+
+    for value in dict_one:
+        if value not in dict_one:
+            return False
+        elif not ex3({value: dict_one[value]}, {value: dict_two[value]}):
+            return False
+
+    return True
 
 
 # The build_xml_element function receives the following parameters: tag, content, and key-value elements given as
@@ -41,6 +50,27 @@ def ex4(tag, content, **kwargs):
 # "middle", "suffix"). A value is considered valid if it starts with "prefix", "middle" is inside the value (not at
 # the beginning or end) and ends with "suffix". The function will return True if the given dictionary matches all the
 # rules, False otherwise.
+def find_rule(rules, value):
+    for rule in rules:
+        if rule[0] is value:
+            return rule
+    return False
+
+
+def validate_rule(rule, text):
+    return text.startswith(rule[1]) and text.endswith(rule[3]) and text.__contains__(rule[2])
+
+
+def ex5(rules: [any], dictionary: {any}):
+    for key in dictionary.keys():
+        rule = find_rule(rules, key)
+        if rule is False:
+            print(key, dictionary[key], "|| has no key")
+            return False
+        else:
+            if not validate_rule(rule, dictionary[key]):
+                return False
+    return True
 
 
 # Write a function that receives as a parameter a list and returns a tuple (a, b), representing the number of unique
@@ -107,8 +137,11 @@ def ex9(*args, **kwargs):
 
 if __name__ == '__main__':
     # print(ex2("Ana has apples"))
+    # ex3({2: [1, 2], 3: "fsd"}, {2: [1, 2]})
     # print(ex4("a", "Hello there", href="http://python.org", _class="my-link", id="someid"))
+    print(ex5({("key1", "", "inside", ""), ("key2", "start", "middle", "winter")},
+              {"key1": "come inside, it's too cold out", "key3": "this is not valid"}))
     # print(ex6([1, 1, 1, 2, 3, 3]))
     # ex7({1, 2}, {2, 3})
     # print(ex8({'start': 'a', 'b': 'a', 'a': '6', '6': 'z', 'x': '2', 'z': '2', '2': '2', 'y': 'start'}))
-    print(ex9(1, 2, 3, 4, x=1, y=2, z=3, w=5))
+    # print(ex9(1, 2, 3, 4, x=1, y=2, z=3, w=5))
