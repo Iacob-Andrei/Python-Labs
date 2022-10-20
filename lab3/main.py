@@ -61,10 +61,10 @@ def ex6(inp):
 # where a and b are two sets, and op is the applied operator: |, &, -.
 def operations(a, b):
     out = dict()
-    out.update({str(a) + " | " + str(b): len(a.union(b))})
-    out.update({str(a) + " & " + str(b): len(a.intersection(b))})
-    out.update({str(a) + " - " + str(b): len(a - b)})
-    out.update({str(b) + " - " + str(a): len(b - a)})
+    out.update({str(a) + " | " + str(b): a.union(b)})
+    out.update({str(a) + " & " + str(b): a.intersection(b)})
+    out.update({str(a) + " - " + str(b): a - b})
+    out.update({str(b) + " - " + str(a): b - a})
     return out
 
 
