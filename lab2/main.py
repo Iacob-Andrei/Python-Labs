@@ -6,11 +6,11 @@ def ex1(n):
     if n == 0:
         return []
     if n == 1:
-        return [1]
+        return [0]
     if n == 2:
-        return [1, 1]
+        return [0, 1]
 
-    first_n_fibo = [1, 1]
+    first_n_fibo = [0, 1]
     for i in range(1, n - 1):
         first_n_fibo.append(first_n_fibo[i] + first_n_fibo[i - 1])
     return first_n_fibo
