@@ -22,13 +22,25 @@ def ex2(inp):
 # Compare two dictionaries without using the operator "==" returning True or False. (Attention, dictionaries must be
 # recursively covered because they can contain other containers, such as dictionaries, lists, sets, etc.)
 def ex3(dict_one, dict_two):
-    pass
+    for key in dict_one:
+        if key not in dict_two:
+            return False
 
-    for value in dict_one:
-        if value not in dict_one:
+    for key in dict_two:
+        if key not in dict_one:
             return False
-        elif not ex3({value: dict_one[value]}, {value: dict_two[value]}):
+
+        if type(dict_two[key]) not in (dict, list):
+            if dict_one[key] is not dict_two[key]:
+                return False
+        elif type(dict_one[key]) is not type(dict_two[key]):
             return False
+        elif type(dict_two[key]) is dict:
+            if not ex3(dict_one[key], dict_two[key]):
+                return False
+        elif type(dict_two[key]) is list:
+            if dict_one[key] != dict_two[key]:
+                return False
 
     return True
 
@@ -137,10 +149,10 @@ def ex9(*args, **kwargs):
 
 if __name__ == '__main__':
     # print(ex2("Ana has apples"))
-    # ex3({2: [1, 2], 3: "fsd"}, {2: [1, 2]})
+    print(ex3({2: {2: 3}, 44: [3, 2]}, {2: {2: 3}, 44: [3, 2]}))
     # print(ex4("a", "Hello there", href="http://python.org", _class="my-link", id="someid"))
-    print(ex5({("key1", "", "inside", ""), ("key2", "start", "middle", "winter")},
-              {"key1": "come inside, it's too cold out", "key3": "this is not valid"}))
+    # print(ex5({("key1", "", "inside", ""), ("key2", "start", "middle", "winter")},
+    #           {"key1": "come inside, it's too cold out", "key3": "this is not valid"}))
     # print(ex6([1, 1, 1, 2, 3, 3]))
     # ex7({1, 2}, {2, 3})
     # print(ex8({'start': 'a', 'b': 'a', 'a': '6', '6': 'z', 'x': '2', 'z': '2', '2': '2', 'y': 'start'}))
