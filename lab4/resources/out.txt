@@ -1,0 +1,4 @@
+D:\Facultate\Python-Labs\lab4\resources\index.html
+D:\Facultate\Python-Labs\lab4\resources\inp.txt
+D:\Facultate\Python-Labs\lab4\resources\out.txt
+D:\Facultate\Python-Labs\lab4\resources\some.ss
