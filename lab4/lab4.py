@@ -6,7 +6,7 @@ import sys
 # returnează o listă cu extensiile unice sortate crescator (in ordine alfabetica) a fișierelor din directorul dat ca
 # parametru.
 def ex1(path):
-    extensions = [file.split('.')[1] for file in os.listdir(path)]
+    extensions = [file.rsplit('.')[1] for file in os.listdir(path)]
     extensions.sort()
     print(extensions)
 
@@ -34,7 +34,7 @@ def count_extensions(my_path):
 
     for filename in os.listdir(my_path):
         if os.path.isfile(os.path.join(my_path, filename)):
-            if filename.split('.')[1] not in ext_count:
+            if filename.rsplit('.')[1] not in ext_count:
                 ext_count[filename.split('.')[1]] = 1
             else:
                 ext_count[filename.split('.')[1]] += 1
@@ -55,8 +55,65 @@ def ex3(my_path):
 # Să se scrie o funcție ce returnează o listă cu extensiile unice a fișierelor din directorul dat ca argument la
 # linia de comandă (nerecursiv). Lista trebuie să fie sortată crescător.
 def ex4(path):
-    data = {file.split('.')[1] for file in os.listdir(path)}
+    data = {file.rsplit('.')[1] for file in os.listdir(path)}
     print(list(data))
+
+
+# Să se scrie o funcție care primește ca argumente două șiruri de caractere, target și to_search și returneaza o
+# listă de fișiere care conțin to_search. Fișierele se vor căuta astfel: dacă target este un fișier, se caută doar in
+# fișierul respectiv iar dacă este un director se va căuta recursiv in toate fișierele din acel director. Dacă target
+# nu este nici fișier, nici director, se va arunca o excepție de tipul ValueError cu un mesaj corespunzator.
+def ex5(target, to_search):
+    try:
+        assert (os.path.isfile(target) or os.path.isdir(target)), f'{target} is not a file or directory.'
+
+        if os.path.isfile(target):  # check for file
+            data = open(target, 'r').read()
+            if to_search in data:
+                return [target]
+        else:  # check for directory
+            files = list()
+            for (root, directories, files) in os.walk(target):
+                for filename in files:
+                    full_filename = os.path.join(root, filename)
+                    data = open(full_filename, 'r').read()
+                    if to_search in data:
+                        files.append(full_filename)
+            return files
+
+    except ValueError as e:
+        print(e)
+
+
+# Să se scrie o funcție care are același comportament ca funcția de la exercițiul anterior, cu diferența că primește
+# un parametru în plus: o funcție callback, care primește un parametru, iar pentru fiecare eroare apărută în
+# procesarea fișierelor, se va apela funcția respectivă cu instanța excepției ca parametru.
+def error_callback(exception):
+    print(f'EXCEPTION RAISED! \'{exception}\'')
+
+
+def ex6(target, to_search, err_callback):
+    try:
+        assert (os.path.isfile(target) or os.path.isdir(target)), f'{target} is not a file or directory.'
+
+        if os.path.isfile(target):  # check for file
+            assert (os.access(target, os.R_OK)), f'{target} can not be read'
+            data = open(target, 'r').read()
+            if to_search in data:
+                return [target]
+        else:  # check for directory
+            files = list()
+            for (root, directories, files) in os.walk(target):
+                for filename in files:
+                    full_filename = os.path.join(root, filename)
+                    assert (os.access(full_filename, os.R_OK)), f'{full_filename} can not be read'
+                    data = open(full_filename, 'r').read()
+                    if to_search in data:
+                        files.append(full_filename)
+            return files
+
+    except ValueError as e:
+        err_callback(e)
 
 
 # Să se scrie o funcție care primește ca parametru un șir de caractere care reprezintă calea către un fișer si
