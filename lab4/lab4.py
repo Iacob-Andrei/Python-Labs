@@ -125,7 +125,7 @@ def ex7(path):
     info['full_path'] = os.path.join(os.getcwd(), path)
     info['file_size'] = os.stat(path).st_size
     if os.path.isfile(path):
-        info['file_extension'] = path.split('.')[1]
+        info['file_extension'] = path.rsplit('.')[1]
     else:
         info['file_extension'] = None
     info['can_read'] = os.access(path, os.R_OK)
@@ -149,7 +149,7 @@ if __name__ == '__main__':
 
     # ex2("D:\Facultate\Python-Labs\lab4\\resources", "D:\Facultate\Python-Labs\lab4\\resources\out.txt")
 
-    # ex3("D:\Facultate\Python-Labs\lab4\\resources\out.txt")
+    #ex3("D:\Facultate\Python-Labs\lab4\\resources\out.txt")
 
     # ex3("D:\Facultate\Python-Labs\lab4")
 
