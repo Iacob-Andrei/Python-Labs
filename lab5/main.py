@@ -1,6 +1,3 @@
-import utils
-
-
 # Create a function and an anonymous function that receive a variable number of arguments. Both will return the sum
 # of the values of the keyword arguments.
 def suma(*args, **kwargs):
@@ -60,9 +57,12 @@ def ex4(*args, **kwargs) -> list:
 # Write a function with one parameter which represents a list. The function will return a new list containing all the
 # numbers found in the given list.
 def ex5(inp: list) -> list:
-    print(str(inp))
+    return_list = []
 
-    return []
+    for el in inp:
+        if type(el) in [int, float, complex]:
+            return_list.append(el)
+    return return_list
 
 
 # Write a function that receives a list with integers as parameter that contains an equal number of even and odd
@@ -75,8 +75,102 @@ def ex6(inp: list) -> list:
     return list(zip(odd, even))
 
 
+def generate_fibo(n: int) -> list:
+    if n == 0:
+        return []
+    if n == 1:
+        return [0]
+    if n == 2:
+        return [0, 1]
+
+    first_n_fibo = [0, 1]
+    for i in range(1, n - 1):
+        first_n_fibo.append(first_n_fibo[i] + first_n_fibo[i - 1])
+    return first_n_fibo
+
+
+def sum_digits(x):
+    return sum(map(int, str(x)))
+
+
+# Write a function called process that receives a variable number of keyword arguments The function generates the
+# first 1000 numbers of the Fibonacci sequence and then processes them in the following way: If the function receives
+# a parameter called filters, this will be a list of predicates (function receiving an argument and returning
+# True/False) and will retain from the generated numbers only those for which the predicates are True. If the
+# function receives a parameter called limit, it will return only that amount of numbers from the sequence. If the
+# function receives a parameter called offset, it will skip that number of entries from the beginning of the result
+# list. The function will return the processed numbers.
+def ex7(**kwargs):
+    fibo = generate_fibo(1000)
+
+    if "filters" in kwargs.keys():
+        for f in kwargs["filters"]:
+            fibo = list(filter(f, fibo))
+
+    if "offset" in kwargs.keys():
+        fibo = fibo[kwargs["offset"]:]
+
+    if "limit" in kwargs.keys():
+        fibo = fibo[:kwargs["limit"]]
+
+    print(fibo)
+
+
+# Write a function called print_arguments with one parameter named function. The function will return one new
+# function which prints the arguments and the keyword arguments received and will return the output of the function
+# receives as a parameter.
+def add_numbers(a, b):
+    return a + b
+
+
+def multiply_by_two(x):
+    return x * 2
+
+
+def print_arguments(function):
+    def f(*args, **kwargs):
+        print(args, kwargs)
+        return function(*args, **kwargs)
+
+    return f
+
+
+# Write a function called multiply_output with one parameter named function. The function will return one new
+# function which returns the output of the function received multiplied by 2.
+
+def multiply_by_three(x):
+    return x * 3
+
+
+def multiply_output(function):
+    def f(*args, **kwargs):
+        return 2 * function(*args, **kwargs)
+
+    return f
+
+
+# Write a function called augment_function with two parameters named function and decorators. decorators will be a
+# list of functions which will have the same signature as the previous functions (print_arguments, multiply_output).
+# augment_function will create a new function which is augmented using all the functions in the decorators list.
+# ?????
+
+
+# Write a function that receives a list of pairs of integers (tuples with 2 elements) as parameter (named pairs). The
+# function should return a list of dictionaries for each pair (in the same order as in the input list) that contain
+# the following keys (as strings): sum (the value should be sum of the 2 numbers), prod (the value should be product
+# of the two numbers), pow (the value should be the first number raised to the power of the second number)
+def ex9(pairs):
+    return_list = list()
+    for pair in pairs:
+        return_list.append({"sum": (pair[0] + pair[1]),
+                            "prod": (pair[0] * pair[1]),
+                            "pow": (pair[0] ** pair[1])})
+    return return_list
+
+
 if __name__ == '__main__':
     # ex2()
+
     # ex3()
 
     # ex4({1: 2, 3: 4, 5: 6},
@@ -88,7 +182,22 @@ if __name__ == '__main__':
     #     dictionar={'ab': 4, 'ac': 'abcde', 'fg': 'abc'},
     #     test={1: 1, 'test': True})
 
-    # ex5([1, "2", {"3": "a"}, {4, 5}, 5, 6, 3.0])
+    # ex5([1111, "2", {"35": "a"}, {4, 5}, 5, 6, 3.0])
 
-    print(ex6([1, 3, 5, 2, 8, 7, 4, 10, 9, 2]))
+    # print(ex6([1, 3, 5, 2, 8, 7, 4, 10, 9, 2]))
 
+    # ex7(filters=[lambda item: item % 2 == 0, lambda item: item == 2 or 4 <= sum_digits(item) <= 20],
+    #     limit=2,
+    #     offset=2)
+
+    # 8a
+    # augmented_multiply_by_two = print_arguments(multiply_by_two)
+    # print(augmented_multiply_by_two(10))
+    # augmented_add_numbers = print_arguments(add_numbers)
+    # print(augmented_add_numbers(3, 4))
+
+    # 8b
+    # augmented_multiply_by_three = multiply_output(multiply_by_three)
+    # print(augmented_multiply_by_three(10))
+
+    print(ex9(pairs=[(5, 2), (19, 1), (30, 6), (2, 2)]))
