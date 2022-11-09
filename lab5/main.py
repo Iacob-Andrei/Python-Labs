@@ -59,9 +59,9 @@ def ex4(*args, **kwargs) -> list:
 def ex5(inp: list) -> list:
     return_list = []
 
-    for el in inp:
-        if type(el) in [int, float, complex]:
-            return_list.append(el)
+    for element in inp:
+        if type(element) in [int, float]:
+            return_list.append(element)
     return return_list
 
 
@@ -131,7 +131,6 @@ def print_arguments(function):
     def f(*args, **kwargs):
         print(args, kwargs)
         return function(*args, **kwargs)
-
     return f
 
 
@@ -145,14 +144,19 @@ def multiply_by_three(x):
 def multiply_output(function):
     def f(*args, **kwargs):
         return 2 * function(*args, **kwargs)
-
     return f
 
 
 # Write a function called augment_function with two parameters named function and decorators. decorators will be a
 # list of functions which will have the same signature as the previous functions (print_arguments, multiply_output).
 # augment_function will create a new function which is augmented using all the functions in the decorators list.
-# ?????
+def augment_function(function, decorators):
+    def f(*args, **kwargs):
+        fun = function
+        for decorator in decorators:
+            fun = decorator(fun)
+        return fun(*args, **kwargs)
+    return f
 
 
 # Write a function that receives a list of pairs of integers (tuples with 2 elements) as parameter (named pairs). The
@@ -193,6 +197,7 @@ if __name__ == '__main__':
     # 8a
     # augmented_multiply_by_two = print_arguments(multiply_by_two)
     # print(augmented_multiply_by_two(10))
+
     # augmented_add_numbers = print_arguments(add_numbers)
     # print(augmented_add_numbers(3, 4))
 
@@ -200,4 +205,9 @@ if __name__ == '__main__':
     # augmented_multiply_by_three = multiply_output(multiply_by_three)
     # print(augmented_multiply_by_three(10))
 
-    print(ex9(pairs=[(5, 2), (19, 1), (30, 6), (2, 2)]))
+    # 8c
+    decorated_function = augment_function(add_numbers, [print_arguments, multiply_output])
+    x = decorated_function(3, 4)
+    print(x)
+
+    # print(ex9(pairs=[(5, 2), (19, 1), (30, 6), (2, 2)]))
