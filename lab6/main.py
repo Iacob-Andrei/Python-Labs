@@ -77,12 +77,13 @@ def censor_text(input_text):
 
 
 def ex6(text):
-    return re.sub(r"(a|e|i|o|u)\w+(a|e|i|o|u)", censor_text, text)
+    return re.sub(r"\b(a|e|i|o|u)\w+(a|e|i|o|u)\b", censor_text, text)
 
 
 # Verify using a regular expression whether a string is a valid CNP.
 def ex7(cnp):
     return None
+
 
 if __name__ == '__main__':
     # print(ex1('Ana are 10 mere'))
@@ -90,5 +91,5 @@ if __name__ == '__main__':
     # ex3("ana are 10 mere", [r"\d+", r"\w+"])
     # ex4("resources/ex5.xml", attrs={"class": "url", "name": "url-form", "data-id": "item"})
     # ex5("resources/ex5.xml", attrs={"class": "url", "name": "url-form", "data-id": "item"})
-    # print(ex6("ana va fi enzurata"))
-    ex7("5010909275565")
+    print(ex6("ana va fi enzurata"))
+    #ex7("5010909275565")
