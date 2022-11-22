@@ -81,8 +81,36 @@ def ex6(text):
 
 
 # Verify using a regular expression whether a string is a valid CNP.
+# https://en.wikipedia.org/wiki/Romanian_identity_card
+def compute_control_digit(digits: str) -> str:
+    # 279146358279 and first 12 from cnp
+    # sum of products from dig_i(279146358279) * dig_j(cnp)
+    # final res = sum % 11
+    # if final res = 10 -> control dig = 1
+
+    checksum_number = "279146358279"
+    suma = 0
+    for i, j in zip(checksum_number, digits):
+        suma += int(i) * int(j)
+    suma = suma % 11
+    if suma == 10:
+        suma = 1
+    return str(suma)
+
+
 def ex7(cnp):
-    return None
+    match_first_digit = r"[1-9]"
+    match_year = r"\d{2}"
+    match_month = r"(0[1-9]|1[0-2])"
+    match_day = r"(0[1-9]|[12]\d|3[01])"
+    match_county = r"(0[1-9]|[1-4]\d|5[0-2]|99)"
+    match_random_digits = r"(00[1-9]|0[1-9]\d|[1-9]\d\d)"
+    match_control_digit = compute_control_digit(cnp[:-1])
+    regex_exp = r"^" + match_first_digit + match_year + match_month + match_day + match_county + match_random_digits + match_control_digit + r"$"
+
+    if re.match(regex_exp, cnp):
+        return True
+    return False
 
 
 if __name__ == '__main__':
@@ -91,5 +119,5 @@ if __name__ == '__main__':
     # ex3("ana are 10 mere", [r"\d+", r"\w+"])
     # ex4("resources/ex5.xml", attrs={"class": "url", "name": "url-form", "data-id": "item"})
     # ex5("resources/ex5.xml", attrs={"class": "url", "name": "url-form", "data-id": "item"})
-    print(ex6("ana va fi enzurata"))
-    #ex7("5010909275565")
+    # print(ex6("ana va fi enzurata"))
+    print(ex7("5010909275565"))
