@@ -112,7 +112,8 @@ def ex7(cnp):
     match_random_digits = r"(00[1-9]|0[1-9]\d|[1-9]\d\d)"
     match_control_digit = compute_control_digit(cnp[:-1])
 
-    regex_exp = match_first_digit + match_year + match_month_day + match_county + match_random_digits + match_control_digit
+    regex_exp = r"^" + match_first_digit + match_year + match_month_day + match_county + match_random_digits \
+                + match_control_digit + r"$"
 
     if re.match(regex_exp, cnp):
         return True
