@@ -99,14 +99,20 @@ def compute_control_digit(digits: str) -> str:
 
 
 def ex7(cnp):
-    match_first_digit = r"[1-9]"
+    match_first_digit = r"[1-8]"
     match_year = r"\d{2}"
-    match_month = r"(0[1-9]|1[0-2])"
-    match_day = r"(0[1-9]|[12]\d|3[01])"
+
+    match_month_31 = r"((0[13578]|1[02])(0[1-9]|[12]\d|3[01]))"
+    match_month_30 = r"((0[469]|11)(0[1-9]|[12]\d|30))"
+    match_month_28 = r"(02(0[1-9]|1\d|2[0-8]))"
+
+    match_month_day = r"(" + match_month_31 + r"|" + match_month_30 + r"|" + match_month_28 +r")"
+
     match_county = r"(0[1-9]|[1-4]\d|5[0-2]|99)"
     match_random_digits = r"(00[1-9]|0[1-9]\d|[1-9]\d\d)"
     match_control_digit = compute_control_digit(cnp[:-1])
-    regex_exp = r"^" + match_first_digit + match_year + match_month + match_day + match_county + match_random_digits + match_control_digit + r"$"
+
+    regex_exp = match_first_digit + match_year + match_month_day + match_county + match_random_digits + match_control_digit
 
     if re.match(regex_exp, cnp):
         return True
@@ -120,4 +126,4 @@ if __name__ == '__main__':
     # ex4("resources/ex5.xml", attrs={"class": "url", "name": "url-form", "data-id": "item"})
     # ex5("resources/ex5.xml", attrs={"class": "url", "name": "url-form", "data-id": "item"})
     # print(ex6("ana va fi enzurata"))
-    print(ex7("5010909275565"))
+    print(ex7("6021109299884"))
