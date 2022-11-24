@@ -1,6 +1,7 @@
 import re
 import os
 
+
 # Write a function that extracts the words from a given text as a parameter. A word is defined as a sequence of
 # alphanumeric characters.
 def ex1(inp):
@@ -13,14 +14,15 @@ def ex2(regex, text, x):
     return list(filter(lambda a: len(a) == x, re.findall(regex, text)))
 
 
-# Write a function that receives as a parameter a string of text characters and a list of regular expressions and
-# returns a list of strings that match on at least one regular expression given as a parameter.
-def ex3(text, regex):
+# Write a function that receives two parameters: a list of strings and a list of regular expressions. The function
+# will return a list of the strings that match on at least one regular expression from the list given as parameter.
+def ex3(texts, regex):
     match_list = list()
     for reg in regex:
-        for word in re.findall(reg, text):
-            if word not in match_list:
-                match_list.append(word)
+        for text in texts:
+            for word in re.findall(reg, text):
+                if word not in match_list:
+                    match_list.append(word)
     print(match_list)
     return match_list
 
@@ -104,9 +106,12 @@ def ex7(cnp):
 
     match_month_31 = r"((0[13578]|1[02])(0[1-9]|[12]\d|3[01]))"
     match_month_30 = r"((0[469]|11)(0[1-9]|[12]\d|30))"
-    match_month_28 = r"(02(0[1-9]|1\d|2[0-8]))"
+    if int(cnp[1:3]) % 4 != 0:
+        match_month_feb = r"(02(0[1-9]|1\d|2[0-8]))"
+    else:
+        match_month_feb = r"(02(0[1-9]|1\d|2[0-9]))"
 
-    match_month_day = r"(" + match_month_31 + r"|" + match_month_30 + r"|" + match_month_28 +r")"
+    match_month_day = r"(" + match_month_31 + r"|" + match_month_30 + r"|" + match_month_feb + r")"
 
     match_county = r"(0[1-9]|[1-4]\d|5[0-2]|99)"
     match_random_digits = r"(00[1-9]|0[1-9]\d|[1-9]\d\d)"
@@ -123,8 +128,8 @@ def ex7(cnp):
 if __name__ == '__main__':
     # print(ex1('Ana are 10 mere'))
     # print(ex2(r"\w+", "ana are 10 mere ananas", 3))
-    # ex3("ana are 10 mere", [r"\d+", r"\w+"])
+    ex3(["ana are 10 mere", "45"], [r"\d+", r"\w+"])
     # ex4("resources/ex5.xml", attrs={"class": "url", "name": "url-form", "data-id": "item"})
     # ex5("resources/ex5.xml", attrs={"class": "url", "name": "url-form", "data-id": "item"})
     # print(ex6("ana va fi enzurata"))
-    print(ex7("6021109299884"))
+    #print(ex7("6040229299884"))
